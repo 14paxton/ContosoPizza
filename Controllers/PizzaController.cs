@@ -1,5 +1,5 @@
-using ContosoPizza.Models;
 using ContosoPizza.Services;
+using ContosoPizza.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoPizza.Controllers;
@@ -8,58 +8,56 @@ namespace ContosoPizza.Controllers;
 [Route("[controller]")]
 public class PizzaController : ControllerBase
 {
-    public PizzaController()
-    {
-    }
+    PizzaService _service;
 
+    public PizzaController(PizzaService service)
+    {
+        _service = service;
+    }
 
     [HttpGet]
-    public ActionResult<List<Pizza>> GetAll() => PizzaService.GetAll();
+    public IEnumerable<Pizza> GetAll()
+    {
+        return _service.GetAll();
+    }
 
     [HttpGet("{id}")]
-    public ActionResult<Pizza> Get(int id)
+    public ActionResult<Pizza> GetById(int id)
     {
-        var pizza = PizzaService.Get(id);
+        var pizza = _service.GetById(id);
 
-        if (pizza == null)
+        if (pizza is not null)
+        {
+            return pizza;
+        }
+        else
+        {
             return NotFound();
-
-        return pizza;
+        }
     }
+
 
     [HttpPost]
-    public IActionResult Create(Pizza pizza)
+    public IActionResult Create(Pizza newPizza)
     {
-        PizzaService.Add(pizza);
-        return CreatedAtAction(nameof(Get), new { id = pizza.Id }, pizza);
+        var pizza = _service.Create(newPizza);
+        return CreatedAtAction(nameof(GetById), new { id = pizza!.Id }, pizza);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Pizza pizza)
-    {
-        if (id != pizza.Id)
-            return BadRequest();
-
-        var existingPizza = PizzaService.Get(id);
-        if (existingPizza is null)
-            return NotFound();
-
-        PizzaService.Update(pizza);
-
-        return NoContent();
-    }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var pizza = PizzaService.Get(id);
+        var pizza = _service.GetById(id);
 
-        if (pizza is null)
+        if (pizza is not null)
+        {
+            _service.DeleteById(id);
+            return Ok();
+        }
+        else
+        {
             return NotFound();
-
-        PizzaService.Delete(id);
-
-        return NoContent();
+        }
     }
 }
-

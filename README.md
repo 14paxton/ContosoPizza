@@ -1,6 +1,13 @@
 - https://learn.microsoft.com/en-us/training/modules/build-web-api-aspnet-core/6-exercise-add-controller
 - https://dotnet.microsoft.com/en-us/apps/aspnet
 
+
+
+# Run
+```bash
+dotnet run --urls=https://localhost:5101
+```
+
 # HttpRepl
 
 ```bash
@@ -57,10 +64,3 @@ Scaffolds a DbContext and model classes using the provided connection string.
 Specifies the Microsoft.EntityFrameworkCore.Sqlite database provider should be used.
 Specifies directories for the resulting DbContext and model classes.
 ```
-
-
-# Run
-```bash
-dotnet run --urls=https://localhost:5101
-```
-

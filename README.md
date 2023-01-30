@@ -1,9 +1,5 @@
 - https://learn.microsoft.com/en-us/training/modules/build-web-api-aspnet-core/6-exercise-add-controller
 - https://dotnet.microsoft.com/en-us/apps/aspnet
-- https://www.c-sharpcorner.com/article/microservice-using-asp-net-core/
-- https://www.c-sharpcorner.com/article/microservice-using-asp-net-core/
--
-
 
 # HttpRepl
 
